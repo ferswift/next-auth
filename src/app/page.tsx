@@ -1,7 +1,5 @@
-import React from "react";
-
 const PageRoot = () => {
-  return <div>TAMO FUNFANDO MERMAO</div>;
+  return <div>Homepage</div>;
 };
 
 export default PageRoot;
