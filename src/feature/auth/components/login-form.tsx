@@ -5,8 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { type LoginFormData, loginSchema } from "../schema/login-schema";
 import { authClient } from "@/feature/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const { push } = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -33,6 +36,8 @@ export const LoginForm = () => {
       console.error(error);
       return;
     }
+
+    push("/dashboard");
 
     console.log(data);
   };
