@@ -17,7 +17,7 @@ export const LogoutButton = () => {
       onClick={handleLogout}
       className="rounded-lg bg-purple-600 px-4 py-2 font-medium text-white transition hover:bg-purple-700 focus:bg-purple-300"
     >
-      Sair
+      Sair da plataforma
     </button>
   );
 };
