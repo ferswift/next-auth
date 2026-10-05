@@ -23,6 +23,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   accounts      Account[]
+  products      Product[]
 
   @@map("user")
 }
@@ -74,4 +75,17 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  priceInCents Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  userId       String
+  stock        Int      @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

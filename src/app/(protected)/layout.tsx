@@ -8,7 +8,7 @@ const PrivateLayout = ({ children }: LayoutProps<"/">) => {
           <nav className="flex items-center gap-4">
             <span className="text-sm text-gray-600">Dashboard</span>
           </nav>
-        </div>ʝ
+        </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8">{children}</main>
