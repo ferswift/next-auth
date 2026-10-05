@@ -1,5 +1,6 @@
 import { auth } from "@/feature/lib/auth";
-import { getProducts } from "@/feature/products/queries/get-products";
+import { ProductTable } from "@/feature/products/components/product-table";
+import { MOCK_PRODUCTS } from "@/feature/products/mock/products";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -14,13 +15,11 @@ const ProductsPage = async () => {
   }
 
   // Pega os produtods do usuário logado
-  const products = await getProducts(session.user.id);
+  // const products = await getProducts(session.user.id);
 
   return (
     <div>
-      {products.map((product) => (
-        <div key={product.id}>{product.name}</div>
-      ))}
+      <ProductTable products={MOCK_PRODUCTS} />
     </div>
   );
 };
