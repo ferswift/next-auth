@@ -1,6 +1,7 @@
 import { auth } from "@/feature/lib/auth";
+import { ProductForm } from "@/feature/products/components/product-form";
 import { ProductTable } from "@/feature/products/components/product-table";
-import { MOCK_PRODUCTS } from "@/feature/products/mock/products";
+import { getProducts } from "@/feature/products/queries/get-products";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -15,11 +16,12 @@ const ProductsPage = async () => {
   }
 
   // Pega os produtods do usuário logado
-  // const products = await getProducts(session.user.id);
+  const products = await getProducts(session.user.id);
 
   return (
-    <div>
-      <ProductTable products={MOCK_PRODUCTS} />
+    <div className="flex flex-col gap-20">
+      <ProductForm />
+      <ProductTable products={products} />
     </div>
   );
 };
