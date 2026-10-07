@@ -31,6 +31,7 @@ export const createProduct = async (data: ProductSchema) => {
 
   try {
     // criando lógica para adicionar produto ao banco de dados
+
     const newProduct = await prisma.product.create({
       data: {
         name,
