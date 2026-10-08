@@ -5,29 +5,43 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { productSchema } from "../schema/product-schema";
 import { createProduct } from "../action/create-product";
+import { Product } from "../types/product";
+import { updateProduct } from "../action/update-product";
 
 type ProductFormValues = z.output<typeof productSchema>;
 
-export const ProductForm = () => {
+interface ProductFormProps {
+  product?: Product;
+}
+
+export const ProductForm = ({ product }: ProductFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
+    defaultValues: {
+      name: product?.name ?? "",
+      description: product?.description ?? "",
+      priceInCents: product?.priceInCents ?? 0,
+      stock: product?.stock ?? 0,
+    },
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    const createProductResponse = await createProduct(data);
-
-    console.log(createProductResponse);
+    if (product) {
+      await updateProduct(product.id, data);
+    } else {
+      await createProduct(data);
+    }
   };
 
   return (
     <div className="mx-auto w-full max-w-2xl rounded-xl border bg-card p-6 shadow-sm">
       <div className="mb-6">
         <h2 className="text-2xl font-semibold tracking-tight">
-          Create Product
+          {product ? "Edit product" : "Create product"}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Add a new product to your inventory.
@@ -53,7 +67,9 @@ export const ProductForm = () => {
             htmlFor="description"
             className="text-sm font-medium leading-none"
           >
-            Description
+            {product
+              ? "Update the product information."
+              : "Add a new product to your inventory."}
           </label>
 
           <textarea
@@ -111,7 +127,7 @@ export const ProductForm = () => {
           type="submit"
           className="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
         >
-          Create Product
+          {product ? "Edit Product" : "Create Product"}
         </button>
         {errors.name && (
           <p className="mt-2 text-sm text-destructive">{errors.name.message}</p>
